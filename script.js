@@ -90,29 +90,29 @@ function renderTables() {
     containerCenter.innerHTML = '';
     containerRight.innerHTML = '';
 
-    // 左邊：1-6 + 預備桌
+    // 左欄 1-6 + 預備桌
     const leftTables = tables.left.filter(t => t.tableNumber !== '預備桌');
     const prepTable = tables.left.find(t => t.tableNumber === '預備桌');
 
     leftTables.forEach(table => {
         containerLeft.appendChild(createTableDiv(table));
     });
-    if(prepTable) {
+    if (prepTable) {
         containerLeft.appendChild(createTableDiv(prepTable));
     }
 
-    // 中間：主桌 + 7-11
+    // 中間 主桌 + 7-11
     const mainTable = tables.center.find(t => t.tableNumber === '主桌');
     const centerTables = tables.center.filter(t => t.tableNumber !== '主桌');
-    
-    if(mainTable) {
+
+    if (mainTable) {
         containerCenter.appendChild(createTableDiv(mainTable));
     }
     centerTables.forEach(table => {
         containerCenter.appendChild(createTableDiv(table));
     });
 
-    // 右邊：12-17
+    // 右欄 12-17
     tables.right.forEach(table => {
         containerRight.appendChild(createTableDiv(table));
     });
