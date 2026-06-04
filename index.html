@@ -7,28 +7,31 @@
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>攏來鴨</h1>
-    <div class="stage">舞台</div>
+  <h1>攏來鴨</h1>
+  <div class="stage">舞台</div>
 
-    <div class="search-container">
-        <input type="text" id="search-bar" placeholder="搜尋來賓..." oninput="searchGuest()" />
-        <div id="search-results"></div>
-    </div>
+  <div class="search-container">
+    <input type="text" id="search-bar" placeholder="搜尋來賓..." oninput="searchGuest()" />
+    <div id="search-results"></div>
+  </div>
 
-    <!-- 單一容器放所有桌 -->
-    <div class="container" id="table-container"></div>
+  <div class="container">
+    <div class="column" id="table-container-left"></div>
+    <div class="column" id="table-container-center"></div>
+    <div class="column" id="table-container-right"></div>
+  </div>
 
-    <div class="overlay" id="overlay"></div>
-    <div class="modal" id="modal">
-        <h3 id="modal-title"></h3>
-        <div class="guest-list" id="guest-list"></div>
-        <div id="guest-edit-list" style="display:none;"></div>
-        <button id="add-guest-btn" class="add-guest-btn" style="display:none;">＋新增來賓</button>
-        <button onclick="closeModal()" id="modal-close-btn">關閉</button>
-    </div>
+  <div class="overlay" id="overlay"></div>
+  <div class="modal" id="modal">
+    <h3 id="modal-title"></h3>
+    <div class="guest-list" id="guest-list"></div>
+    <div id="guest-edit-list" style="display:none;"></div>
+    <button id="add-guest-btn" class="add-guest-btn" style="display:none;">＋新增來賓</button>
+    <button onclick="closeModal()" id="modal-close-btn">關閉</button>
+  </div>
 
-    <button id="edit-mode-toggle">edit</button>
+  <button id="edit-mode-toggle">edit</button>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
