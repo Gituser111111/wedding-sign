@@ -81,36 +81,37 @@ const tables = {
     ]
 };
 
+// 先抽出「預備桌」和「主桌」，固定位置
+const prepTable = tables.left.find(t => t.tableNumber === '預備桌');
+const mainTable = tables.center.find(t => t.tableNumber === '主桌');
+
+const leftTables = tables.left.filter(t => t.tableNumber !== '預備桌');
+const centerTables = tables.center.filter(t => t.tableNumber !== '主桌');
+const rightTables = tables.right;
+
+const allTables = [];
+if (prepTable) allTables.push(prepTable);
+allTables.push(...leftTables);
+if (mainTable) allTables.push(mainTable);
+allTables.push(...centerTables);
+allTables.push(...rightTables);
+
 function renderTables() {
     const container = document.getElementById('table-container');
     container.innerHTML = '';
 
-    // 把三组桌子合并成一个数组
-    const allTables = [...tables.left, ...tables.center, ...tables.right];
-
     allTables.forEach((table, index) => {
         const tableDiv = document.createElement('div');
         tableDiv.className = 'table-circle';
-        const checkedInCount = table.guests.reduce((acc, guest) => acc + (guest.checkedIn ? 1 : 0), 0);
+        const checkedInCount = table.guests.reduce((acc, g) => acc + (g.checkedIn ? 1 : 0), 0);
         tableDiv.innerHTML = `${table.tableNumber}<div class="status">已簽到：${checkedInCount}/${table.guests.length}</div>`;
 
-        tableDiv.onclick = () => openModalUnified(allTables, index);
+        tableDiv.onclick = () => openModal(table);
 
         container.appendChild(tableDiv);
     });
 }
 
-// 适应合并后的 allTables 结构打开模态框
-function openModalUnified(allTables, index) {
-    const table = allTables[index];
-    currentEditTable = null;
-
-    // 因为原本 openModal 需要 sectionKey 和 tableIndex,
-    // 这里简化调用，修改 openModal 使其能只用 table 对象显示，且能编辑内容即可
-    openModal(table);
-}
-
-// 修改 openModal 使只传 table 对象即可（去掉 sectionKey 和 tableIndex），编辑时保持同步即可
 function openModal(table) {
     const modal = document.getElementById('modal');
     const overlay = document.getElementById('overlay');
@@ -153,7 +154,6 @@ function openModal(table) {
     modal.style.display = 'block';
     overlay.style.display = 'block';
 
-    // 保存当前编辑桌子引用，方便增删改
     currentEditTable = table;
 }
 
