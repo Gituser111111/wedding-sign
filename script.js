@@ -81,35 +81,50 @@ const tables = {
     ]
 };
 
-// 先抽出「預備桌」和「主桌」，固定位置
-const prepTable = tables.left.find(t => t.tableNumber === '預備桌');
-const mainTable = tables.center.find(t => t.tableNumber === '主桌');
-
-const leftTables = tables.left.filter(t => t.tableNumber !== '預備桌');
-const centerTables = tables.center.filter(t => t.tableNumber !== '主桌');
-const rightTables = tables.right;
-
-const allTables = [];
-if (prepTable) allTables.push(prepTable);
-allTables.push(...leftTables);
-if (mainTable) allTables.push(mainTable);
-allTables.push(...centerTables);
-allTables.push(...rightTables);
-
 function renderTables() {
-    const container = document.getElementById('table-container');
-    container.innerHTML = '';
+    const containerLeft = document.getElementById('table-container-left');
+    const containerCenter = document.getElementById('table-container-center');
+    const containerRight = document.getElementById('table-container-right');
 
-    allTables.forEach((table, index) => {
-        const tableDiv = document.createElement('div');
-        tableDiv.className = 'table-circle';
-        const checkedInCount = table.guests.reduce((acc, g) => acc + (g.checkedIn ? 1 : 0), 0);
-        tableDiv.innerHTML = `${table.tableNumber}<div class="status">已簽到：${checkedInCount}/${table.guests.length}</div>`;
+    containerLeft.innerHTML = '';
+    containerCenter.innerHTML = '';
+    containerRight.innerHTML = '';
 
-        tableDiv.onclick = () => openModal(table);
+    // 左邊：1-6 + 預備桌
+    const leftTables = tables.left.filter(t => t.tableNumber !== '預備桌');
+    const prepTable = tables.left.find(t => t.tableNumber === '預備桌');
 
-        container.appendChild(tableDiv);
+    leftTables.forEach(table => {
+        containerLeft.appendChild(createTableDiv(table));
     });
+    if(prepTable) {
+        containerLeft.appendChild(createTableDiv(prepTable));
+    }
+
+    // 中間：主桌 + 7-11
+    const mainTable = tables.center.find(t => t.tableNumber === '主桌');
+    const centerTables = tables.center.filter(t => t.tableNumber !== '主桌');
+    
+    if(mainTable) {
+        containerCenter.appendChild(createTableDiv(mainTable));
+    }
+    centerTables.forEach(table => {
+        containerCenter.appendChild(createTableDiv(table));
+    });
+
+    // 右邊：12-17
+    tables.right.forEach(table => {
+        containerRight.appendChild(createTableDiv(table));
+    });
+}
+
+function createTableDiv(table) {
+    const div = document.createElement('div');
+    div.className = 'table-circle';
+    const checkedInCount = table.guests.reduce((acc, g) => acc + (g.checkedIn ? 1 : 0), 0);
+    div.innerHTML = `${table.tableNumber}<div class="status">已簽到：${checkedInCount}/${table.guests.length}</div>`;
+    div.onclick = () => openModal(table);
+    return div;
 }
 
 function openModal(table) {
