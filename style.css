@@ -25,37 +25,25 @@ h1 {
 }
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 18px 30px; /* 行间距18px，列间距30px */
-    justify-content: center;
-    max-width: 400px; /* 限制最大宽度，可以按需要调整 */
-    margin: 0 auto 30px auto; /* 居中 */
-}
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 14px 24px;
+    max-width: 420px;
+    margin: 0 auto 30px auto;
 }
 .table-circle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 80px;
-    height: 80px;
-    font-size: 1em;
     background-color: #5a9bfa;
     color: white;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
-}
-.table-circle:hover {
-    background-color: #4a90e2;
-    transform: translateY(-3px);
+    padding: 16px 0;
+    font-size: 1em;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    user-select: none;
 }
 .status {
+    margin-top: 8px;
     font-size: 0.7em;
-    color: #2b4f81;
 }
 .modal {
     display: none;
